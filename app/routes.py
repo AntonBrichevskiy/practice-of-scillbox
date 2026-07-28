@@ -136,7 +136,10 @@ def init_routes(app):
 
         client = db.session.get(Client, data['client_id'])
         if not client or not client.credit_card:
-            return jsonify({'error': 'Client has no credit card for payment'}), 400
+            return (
+                jsonify({'error': 'Client has no credit card for payment'}),
+                400
+            )
 
         client_parking.time_out = datetime.now(timezone.utc)
 
