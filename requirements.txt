@@ -7,3 +7,12 @@ pytest-flask==1.2.0
 requests==2.31.0
 factory-boy==3.2.1
 Faker==18.11.1
+
+
+black==21.12b0
+flake8==4.0.1
+flake8-bugbear==22.1.11
+flake8-pie==0.15.0
+isort==5.9.3
+mypy==0.931
+pytest-asyncio==0.21.1

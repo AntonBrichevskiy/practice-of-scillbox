@@ -1,0 +1,53 @@
+image: python:3.11
+
+stages:
+  - test
+
+before_script:
+  - pip install --upgrade pip
+  - pip install -r requirements.txt
+
+flake8:
+  stage: test
+  script:
+    - flake8 app/
+  only:
+    - merge_requests
+    - main
+    - develop
+
+black:
+  stage: test
+  script:
+    - black --diff --check app/
+  only:
+    - merge_requests
+    - main
+    - develop
+
+isort:
+  stage: test
+  script:
+    - isort --check-only app/
+  only:
+    - merge_requests
+    - main
+    - develop
+
+mypy:
+  stage: test
+  script:
+    - mypy app/
+  only:
+    - merge_requests
+    - main
+    - develop
+
+pytest:
+  stage: test
+  script:
+    - pytest tests/
+  only:
+    - merge_requests
+    - main
+    - develop
