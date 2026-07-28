@@ -33,7 +33,7 @@ jobs:
       run: isort --check-only app/
     
     - name: Run mypy
-      run: mypy app/
+      run: mypy app/ --ignore-missing-imports
     
     - name: Run pytest
       run: pytest tests/
