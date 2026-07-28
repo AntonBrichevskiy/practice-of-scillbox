@@ -6,7 +6,7 @@ pytest==7.4.0
 pytest-flask==1.2.0
 requests==2.31.0
 factory-boy==3.2.1
-Faker==19.0.0
+Faker==18.11.1
 
 # Линтеры
 black==23.12.1
