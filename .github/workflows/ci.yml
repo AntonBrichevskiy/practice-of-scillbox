@@ -1,53 +1,39 @@
-image: python:3.11
+name: CI
 
-stages:
-  - test
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
 
-before_script:
-  - pip install --upgrade pip
-  - pip install -r requirements.txt
-
-flake8:
-  stage: test
-  script:
-    - flake8 app/
-  only:
-    - merge_requests
-    - main
-    - develop
-
-black:
-  stage: test
-  script:
-    - black --diff --check app/
-  only:
-    - merge_requests
-    - main
-    - develop
-
-isort:
-  stage: test
-  script:
-    - isort --check-only app/
-  only:
-    - merge_requests
-    - main
-    - develop
-
-mypy:
-  stage: test
-  script:
-    - mypy app/
-  only:
-    - merge_requests
-    - main
-    - develop
-
-pytest:
-  stage: test
-  script:
-    - pytest tests/
-  only:
-    - merge_requests
-    - main
-    - develop
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Run flake8
+      run: flake8 app/
+    
+    - name: Run black
+      run: black --diff --check app/
+    
+    - name: Run isort
+      run: isort --check-only app/
+    
+    - name: Run mypy
+      run: mypy app/
+    
+    - name: Run pytest
+      run: pytest tests/
