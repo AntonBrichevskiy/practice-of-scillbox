@@ -33,7 +33,7 @@ jobs:
       run: isort --check-only app/
     
     - name: Run mypy
-      run: mypy app/ --ignore-missing-imports
+      run: mypy app/ --plugins=sqlalchemy.ext.mypy.plugin
     
     - name: Run pytest
       run: pytest tests/
