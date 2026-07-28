@@ -24,7 +24,10 @@ def init_routes(app):
     def create_client():
         data = request.get_json()
         if not data or 'name' not in data or 'surname' not in data:
-            return jsonify({'error': 'Name and surname are required'}), 400
+            return (
+                jsonify({'error': 'Name and surname are required'}),
+                400
+            )
 
         client = Client(
             name=data['name'],
@@ -51,7 +54,10 @@ def init_routes(app):
     def create_parking():
         data = request.get_json()
         if not data or 'address' not in data or 'count_places' not in data:
-            return jsonify({'error': 'Address and count_places are required'}), 400
+            return (
+                jsonify({'error': 'Address and count_places are required'}),
+                400
+            )
 
         parking = Parking(
             address=data['address'],
@@ -68,7 +74,10 @@ def init_routes(app):
     def create_client_parking():
         data = request.get_json()
         if not data or 'client_id' not in data or 'parking_id' not in data:
-            return jsonify({'error': 'client_id and parking_id are required'}), 400
+            return (
+                jsonify({'error': 'client_id and parking_id are required'}),
+                400
+            )
 
         client = db.session.get(Client, data['client_id'])
         parking = db.session.get(Parking, data['parking_id'])
@@ -89,7 +98,10 @@ def init_routes(app):
         ).first()
 
         if existing:
-            return jsonify({'error': 'Client already parked at this parking'}), 400
+            return (
+                jsonify({'error': 'Client already parked at this parking'}),
+                400
+            )
 
         client_parking = ClientParking(
             client_id=data['client_id'],
@@ -108,7 +120,10 @@ def init_routes(app):
     def delete_client_parking():
         data = request.get_json()
         if not data or 'client_id' not in data or 'parking_id' not in data:
-            return jsonify({'error': 'client_id and parking_id are required'}), 400
+            return (
+                jsonify({'error': 'client_id and parking_id are required'}),
+                400
+            )
 
         client_parking = ClientParking.query.filter_by(
             client_id=data['client_id'],
