@@ -11,11 +11,11 @@ def create_app(config_name=None):
 
     # Загрузка конфигурации
     if config_name is None:
-        config_name = os.environ.get('FLASK_ENV', 'development')
+        config_name = os.environ.get("FLASK_ENV", "development")
 
-    if config_name == 'testing':
+    if config_name == "testing":
         app.config.from_object(TestingConfig)
-    elif config_name == 'production':
+    elif config_name == "production":
         app.config.from_object(ProductionConfig)
     else:
         app.config.from_object(DevelopmentConfig)
