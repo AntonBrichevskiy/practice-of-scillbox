@@ -4,6 +4,7 @@ from datetime import datetime, timezone
 
 
 def init_routes(app):
+
     @app.route('/health')
     def health():
         return jsonify({'status': 'ok'})
@@ -14,7 +15,7 @@ def init_routes(app):
         clients = Client.query.all()
         return jsonify([c.to_json() for c in clients])
 
-    @app.route('/clients/<int:client_id>', methods=['GET'])  # <-- ДОБАВЛЕНО
+    @app.route('/clients/<int:client_id>', methods=['GET'])
     def get_client(client_id):
         client = Client.query.get_or_404(client_id)
         return jsonify(client.to_json())
@@ -41,7 +42,7 @@ def init_routes(app):
         parkings = Parking.query.all()
         return jsonify([p.to_json() for p in parkings])
 
-    @app.route('/parkings/<int:parking_id>', methods=['GET'])  # <-- ДОБАВЛЕНО
+    @app.route('/parkings/<int:parking_id>', methods=['GET'])
     def get_parking(parking_id):
         parking = Parking.query.get_or_404(parking_id)
         return jsonify(parking.to_json())
@@ -69,8 +70,8 @@ def init_routes(app):
         if not data or 'client_id' not in data or 'parking_id' not in data:
             return jsonify({'error': 'client_id and parking_id are required'}), 400
 
-        client = Client.query.get(data['client_id'])
-        parking = Parking.query.get(data['parking_id'])
+        client = db.session.get(Client, data['client_id'])
+        parking = db.session.get(Parking, data['parking_id'])
 
         if not client:
             return jsonify({'error': 'Client not found'}), 404
@@ -93,12 +94,14 @@ def init_routes(app):
         client_parking = ClientParking(
             client_id=data['client_id'],
             parking_id=data['parking_id'],
-            time_in=datetime.utcnow()
+            time_in=datetime.now(timezone.utc)
         )
         parking.count_available_places -= 1
 
         db.session.add(client_parking)
         db.session.commit()
+        db.session.refresh(client_parking)
+
         return jsonify(client_parking.to_json()), 201
 
     @app.route('/client_parkings', methods=['DELETE'])

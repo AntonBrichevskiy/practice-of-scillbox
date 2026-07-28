@@ -1,6 +1,6 @@
 import os
 from flask import Flask
-from .config import Config, DevelopmentConfig, TestingConfig, ProductionConfig
+from .config import DevelopmentConfig, TestingConfig, ProductionConfig
 from .models import db
 from . import routes
 
