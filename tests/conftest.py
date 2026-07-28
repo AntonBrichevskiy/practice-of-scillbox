@@ -1,8 +1,18 @@
 import pytest
+import locale
 from datetime import datetime, timezone, timedelta
 from app import create_app
 from app.models import db, Client, Parking, ClientParking
 from tests.factories import ClientFactory, ParkingFactory, ClientParkingFactory
+
+# Устанавливаем локаль для Faker
+try:
+    locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
+except:
+    try:
+        locale.setlocale(locale.LC_ALL, 'C.UTF-8')
+    except:
+        pass
 
 
 @pytest.fixture(scope='session')
@@ -38,7 +48,7 @@ def test_client(db_session):
 
 
 @pytest.fixture
-def test_client_with_card(db_session):  # <-- НОВАЯ ФИКСТУРА
+def test_client_with_card(db_session):
     """Создание тестового клиента с картой"""
     client = ClientFactory(credit_card='1234-5678-9012-3456')
     return client
@@ -59,11 +69,13 @@ def test_parking(db_session):
     db_session.commit()
     return parking
 
+
 @pytest.fixture
 def test_parking_closed(db_session):
     """Создание закрытой парковки через фабрику"""
     parking = ParkingFactory(opened=False, count_places=5)
     return parking
+
 
 @pytest.fixture
 def test_parking_full(db_session):
