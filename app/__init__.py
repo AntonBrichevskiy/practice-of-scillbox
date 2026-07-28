@@ -1,8 +1,10 @@
 import os
+
 from flask import Flask
-from .config import DevelopmentConfig, TestingConfig, ProductionConfig
-from .models import db
+
 from . import routes
+from .config import DevelopmentConfig, ProductionConfig, TestingConfig
+from .models import db
 
 
 def create_app(config_name=None):

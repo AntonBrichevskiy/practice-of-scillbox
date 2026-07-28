@@ -1,6 +1,8 @@
-from flask import jsonify, request
-from .models import db, Client, Parking, ClientParking
 from datetime import datetime, timezone
+
+from flask import jsonify, request
+
+from .models import Client, ClientParking, Parking, db
 
 
 def init_routes(app):
