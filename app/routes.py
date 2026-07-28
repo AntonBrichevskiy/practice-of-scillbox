@@ -4,7 +4,6 @@ from datetime import datetime, timezone
 
 
 def init_routes(app):
-
     @app.route("/health")
     def health():
         return jsonify({"status": "ok"})
