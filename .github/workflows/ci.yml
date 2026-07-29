@@ -18,14 +18,8 @@ jobs:
       with:
         python-version: '3.11'
     
-    - name: Install dependencies and setup locale
+    - name: Install dependencies
       run: |
-        sudo apt-get update
-        sudo apt-get install -y locales
-        sudo locale-gen en_US.UTF-8
-        sudo update-locale LANG=en_US.UTF-8
-        export LANG=en_US.UTF-8
-        export LC_ALL=en_US.UTF-8
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
@@ -39,10 +33,7 @@ jobs:
       run: isort --check-only app/
 
     - name: Run mypy
-      run: mypy app/ --ignore-missing-imports --disable-error-code=name-defined || true
+      run: mypy app/
 
     - name: Run pytest
-      run: |
-        export LANG=en_US.UTF-8
-        export LC_ALL=en_US.UTF-8
-        pytest tests/
+      run: pytest tests/
