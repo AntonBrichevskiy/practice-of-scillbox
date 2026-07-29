@@ -6,7 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 
-class Client(db.Model):
+class Client(db.Model): # type: ignore
     __tablename__ = "client"
 
     id: int = db.Column(db.Integer, primary_key=True)
@@ -27,7 +27,7 @@ class Client(db.Model):
         }
 
 
-class Parking(db.Model):
+class Parking(db.Model): # type: ignore
     __tablename__ = "parking"
 
     id: int = db.Column(db.Integer, primary_key=True)
@@ -48,7 +48,7 @@ class Parking(db.Model):
         }
 
 
-class ClientParking(db.Model):
+class ClientParking(db.Model): # type: ignore
     __tablename__ = "client_parking"
 
     id: int = db.Column(db.Integer, primary_key=True)
